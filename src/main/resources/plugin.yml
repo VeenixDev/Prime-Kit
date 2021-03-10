@@ -1,0 +1,15 @@
+name: Prime-Kit
+version: 1.0-SNAPSHOT
+main: de.veenix.kit.Core
+description: Grants you the ability to create Kits that players can use
+prefix: KIT
+authors: [ VeenixDev ]
+commands:
+  kit:
+    usage: /kit
+    description: Select a Kit you want to play with
+    permission: kit.select
+  mkit:
+    usage: /kit <create|load|delete> <kit name>
+    description: create, load or delete a new/existing kit
+    permission: kit.manage
