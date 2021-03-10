@@ -1,5 +1,5 @@
 name: Prime-Kit
-version: 1.0-SNAPSHOT
+version: 1.0
 main: de.veenix.kit.Core
 description: Grants you the ability to create Kits that players can use
 prefix: KIT
