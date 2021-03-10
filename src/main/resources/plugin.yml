@@ -4,6 +4,7 @@ main: de.veenix.kit.Core
 description: Grants you the ability to create Kits that players can use
 prefix: KIT
 authors: [ VeenixDev ]
+website: https://github.com/VeenixDev/Prime-Kit
 commands:
   kit:
     usage: /kit
