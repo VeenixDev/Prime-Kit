@@ -7,6 +7,7 @@ import de.veenix.kit.config.SelectedKitConfig;
 import de.veenix.kit.inventories.DefaultInventory;
 import de.veenix.kit.inventories.SelectorInventory;
 import de.veenix.kit.listener.*;
+import de.veenix.kit.stats.Stats;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,10 +25,18 @@ public class Core extends JavaPlugin {
         // Load Inventories
         DefaultInventory.init();
         SelectorInventory.init();
+
+        // Load Database
+        Stats.instance.init();
     }
 
     @Override
     public void onEnable() {
+        if(Stats.instance.getConnection() == null) {
+            Bukkit.getConsoleSender().sendMessage(Core.getInstance().getConfig().getString("error.dbConnection").replace("&", "§"));
+            Core.getInstance().getPluginLoader().disablePlugin(Core.getInstance());
+            return;
+        }
 
         // Register Commands
         getCommand("mkit").setExecutor(new ManageKitCommand());
@@ -65,6 +74,8 @@ public class Core extends JavaPlugin {
         getConfig().addDefault("message.kitDelete", "&a{{Kit}} was successfully deleted");
         getConfig().addDefault("error.kitDelete", "&c{{Kit}} couldn't be deleted");
 
+        getConfig().addDefault("error.dbConnection", "&cERROR: Couldn't connect to Database please make sure your database is up and running. Or change you settings in the config.");
+
         // LORE
         getConfig().addDefault("lore.kitSelector", "&8Choose which kit you want to play");
 
@@ -73,6 +84,14 @@ public class Core extends JavaPlugin {
 
         // Settings
         getConfig().addDefault("settings.deathBelow", 0d);
+
+        // Database
+        getConfig().addDefault("database.host", "localhost");
+        getConfig().addDefault("database.port", 3306);
+        getConfig().addDefault("database.database", "primeKit");
+        getConfig().addDefault("database.username", "root");
+        getConfig().addDefault("database.password", "");
+        getConfig().addDefault("database.tables.stats", "stats");
 
         getConfig().options().copyDefaults(true);
         saveConfig();
